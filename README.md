@@ -1,17 +1,13 @@
 # Aufgabenstellung
 
-- Wenn der User die Seite aufruft sieht er ein Login-Formular (s. Anhang)
-- Hinter dem Login-Formular befindet sich die “geschützte” Seite
-- Erst bei Eingabe einer gültigen Name-Passwort-Kombination verschwindet das Formular
-- Danach wird der dahinter liegende Inhalt sichtbar (die Seite wird nicht verlassen)
-- Passwort ist case-sensitive. Benutzername nicht.
-- Die Abfrage, ob ein Passwort gültig ist, erfolgt via JavaScript
-- Es existiert ein Array mit gültigen Name-Passwort-Kombinationen (s. Kommentar)
-- Der Name des aktuell eingeloggten Benutzers wird auf der Seite angezeigt
-- Bei erfolgreichem Login wird ein Cookie gesetzt
-- Wenn das Cookie gesetzt ist, soll der User sich nicht nochmal einloggen müssen
-- Ein Klick auf die Schaltfläche “Logout” entfernt das Cookie. Seite wird verlassen.
+-Für dieses Projekt verwenden wir die API vom Harvard Museum, um eine digitale Kunstgalerie zu erstellen. Hier ist es sehr wichtig sich mit den Parametern der API auseinanderzusetzen. 
+https://github.com/harvardartmuseums/api-docs
 
-__Design:__ 
+__Schritt 1:__ 
+-Ihr könnt mit der API Daten anzeigen lassen. Bei Klick auf den “see more” Button werden mehr Daten geladen und angezeigt.
 
-https://www.figma.com/file/HTKJ4lFdTj2MBaJuD6uicH/topsecret
+__Schritt 2:__ 
+-Ihr habt zusätzlich eine funktionierende Suchfunktion ODER Filter Möglichkeiten.
+
+__Schritt 3:__ 
+-Die Suchfunktion UND die Filter Möglichkeiten funktionieren. 

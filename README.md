@@ -1,6 +1,6 @@
 # Aufgabenstellung
 
--Für dieses Projekt verwenden wir die API vom Harvard Museum, um eine digitale Kunstgalerie zu erstellen. Hier ist es sehr wichtig sich mit den Parametern der API auseinanderzusetzen. 
+- Für dieses Projekt verwenden wir die API vom Harvard Museum, um eine digitale Kunstgalerie zu erstellen. Hier ist es sehr wichtig sich mit den Parametern der API auseinanderzusetzen. 
 https://github.com/harvardartmuseums/api-docs
 
 __Schritt 1:__ 

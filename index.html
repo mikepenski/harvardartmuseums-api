@@ -12,8 +12,8 @@
 
         <div class="container">
 
-            <a href="#" class="logo">
-                <h1>Harvard/Art Museums</h1>
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.svg">
             </a>
 
             <div id="search">
@@ -32,7 +32,7 @@
 
             <div class="col-md-4">
 
-                <select name="classification" id="classification-filter" form="classification">
+                <select name="classification" id="classification-filter">
                     <option selected disabled>Classification</option>
                     <option value="Paintings">Paintings</option>
                     <option value="Prints">Prints</option>
@@ -42,10 +42,23 @@
                   </select>
 
             </div>
+
+            <div class="col-md-4">
+
+                <select name="medium" id="medium-filter">
+                    <option selected disabled>Medium</option>
+                    <option value="Terracotta">Terracotta</option>
+                </select>
+
+            </div>
             
         </div>
 
+        <div id="number-items"></div>
+        <div>pages: <span id="current-page"></span><span id="item-pages"></span></div>
+
        </div>
+       
 
         <section id="posts">
 
@@ -55,6 +68,8 @@
     
                  
                 </div>
+
+                <button id="loadmore">load more</button>
     
             </div>
 

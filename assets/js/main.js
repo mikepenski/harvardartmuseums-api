@@ -18,6 +18,23 @@ const totalResultsContainer = document.querySelector("#totalResults");
 const numberOfPages = document.querySelector("#item-pages");
 const currentPageContainer = document.querySelector("#current-page");
 
+const siteSearch = document.querySelector("#site-search");
+
+/*
+* adding padding to body (header height)
+*/
+function resizeContent(){
+    const header = document.querySelector("header")
+    let header_height = header.offsetHeight;
+
+    body.style.paddingTop = header_height + "px";
+
+}
+resizeContent();
+
+window.onresize = resizeContent;
+
+
 let type;
 let currentPage = 1;
 
@@ -29,12 +46,13 @@ var queryStringObject = {
     page: 1,
     size: 12,
     //&q=title:20,
+    //q: "horseman",
 };
 
 
 var queryString = JSON.stringify(queryStringObject);
 queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
-//console.log(queryString)
+console.log(queryString)
 
 /*
 * eventListener for classification
@@ -42,6 +60,7 @@ queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replace
 classificationFilter.addEventListener("change", () => {
 
     type = "classification";
+    queryStringObject["medium"] = "any";
 
     queryStringObject["classification"] = classificationFilter.value;
 
@@ -69,18 +88,35 @@ mediumFilter.addEventListener("change", () => {
 
 
 /*
-* adding padding to body (header height)
+* loading animation
 */
-function resizeContent(){
-    const header = document.querySelector("header")
-    let header_height = header.offsetHeight;
+let loader = (status) =>{
 
-    body.style.paddingTop = header_height + "px";
+    if(status == true){
+
+        body.classList.add("loading");
+      
+        let loadingContainer = document.createElement('div');
+        loadingContainer.className = 'loadingContainer';
+
+        body.appendChild(loadingContainer);
+
+        let loader = `<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`;
+        
+        loadingContainer.innerHTML = loader;
+
+    }
+
+    if(status == false){
+
+        body.classList.remove("loading");
+       
+        let loadingContainer = document.querySelector(".loadingContainer");
+        loadingContainer.parentNode.removeChild(loadingContainer);
+
+    }
 
 }
-resizeContent();
-
-window.onresize = resizeContent;
 
 
 /*
@@ -92,6 +128,8 @@ let html = '';
 let pageFlag = 0;
 
 let fetchPosts = async (type, queryString, currentPage) => {
+
+    loader(true);
 
     if(type == "classification" || "loadmore"){
          html = '';
@@ -112,6 +150,8 @@ let fetchPosts = async (type, queryString, currentPage) => {
     })
     .then(response => response.json())
     .then(data => {
+
+        loader(false);
         
         let posts = data.records;
 
@@ -174,7 +214,7 @@ loadmoreButton.addEventListener("click", (e) => {
         queryStringObject["size"] = queryStringObject["size"] + 12;
 
         var queryString = JSON.stringify(queryStringObject);
-        queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
+        queryString = "&" + queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
 
         currentPage++;
 
@@ -182,4 +222,24 @@ loadmoreButton.addEventListener("click", (e) => {
 
     } 
   
+});
+
+
+/*
+* eventListener for siteSearch
+*/
+siteSearch.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    type = "search";
+
+    delete queryStringObject.classification;
+
+    queryStringObject["q"] = document.querySelector("#seachInput").value;
+
+    var queryString = JSON.stringify(queryStringObject);
+    queryString = "&" + queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
+
+    fetchPosts(type, queryString, currentPage);
 });

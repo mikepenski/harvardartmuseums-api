@@ -16,10 +16,10 @@
                 <img src="assets/images/logo.png" width="200">
             </a>
 
-            <div id="search">
-                <input type="search" id="site-search" name="q" aria-label="Search through site content">
+            <form id="site-search" name="search">
+                <input type="search" id="seachInput" name="q" aria-label="Search through site content">
                 <button>Search</button>
-            </div>
+            </form>
 
         </div>
 
@@ -48,9 +48,8 @@
 
               <select name="medium" id="medium-filter">
                 <option selected disabled>Medium</option>
-                
-                <option value="Tapestry">Tapestry</option>
-                <option value="Tempera">Tempera</option>
+                <option value="Rattan">Rattan</option>
+                <option value="Paper">Paper</option>
                 <option value="Terracotta">Terracotta</option>
             </select>
 
@@ -69,7 +68,11 @@
                  
                 </div>
 
-                <button id="loadmore">load more</button>
+              <div class="text-center">
+
+                <button id="loadmore" class="btn btn-secondary">load more</button>
+
+              </div>
     
             </div>
 

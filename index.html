@@ -13,7 +13,7 @@
         <div class="container">
 
             <a href="index.html" class="logo">
-                <img src="assets/images/logo.svg">
+                <img src="assets/images/logo.png" width="200">
             </a>
 
             <div id="search">
@@ -28,39 +28,39 @@
 
        <div class="container">
 
-        <div class="row">
+        <div class="meta d-flex mb-4">
 
-            <div class="col-md-4">
+            <div id="totalResults" class="mr-4"></div>
+            <div>pages: <span id="current-page"></span><span id="item-pages"></span></div>
 
-                <select name="classification" id="classification-filter">
-                    <option selected disabled>Classification</option>
-                    <option value="Paintings">Paintings</option>
-                    <option value="Prints">Prints</option>
-                    <option value="Multiples">Multiples</option>
-                    <option value="Audiovisual Works">Audiovisual Works</option>
-                    <option value="Drawings">Drawings</option>
-                  </select>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <select name="medium" id="medium-filter">
-                    <option selected disabled>Medium</option>
-                    <option value="Terracotta">Terracotta</option>
-                </select>
-
-            </div>
-            
         </div>
 
-        <div id="number-items"></div>
-        <div>pages: <span id="current-page"></span><span id="item-pages"></span></div>
+        <div class="d-flex mb-4">
 
+            <select name="classification" id="classification-filter" class="mr-4">
+                <option selected disabled>Classification</option>
+                <option value="Paintings">Paintings</option>
+                <option value="Prints">Prints</option>
+                <option value="Multiples">Multiples</option>
+                <option value="Audiovisual Works">Audiovisual Works</option>
+                <option value="Drawings">Drawings</option>
+              </select>
+
+              <select name="medium" id="medium-filter">
+                <option selected disabled>Medium</option>
+                
+                <option value="Tapestry">Tapestry</option>
+                <option value="Tempera">Tempera</option>
+                <option value="Terracotta">Terracotta</option>
+            </select>
+
+        </div>
+
+    
        </div>
        
 
-        <section id="posts">
+        <section id="posts" class="py-5">
 
             <div class="container">
 

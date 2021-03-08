@@ -14,7 +14,7 @@ const classificationFilter = document.querySelector("#classification-filter");
 const mediumFilter = document.querySelector("#medium-filter");
 
 const loadmoreButton = document.querySelector("#loadmore");
-const numberOfItemsContainer = document.querySelector("#number-items");
+const totalResultsContainer = document.querySelector("#totalResults");
 const numberOfPages = document.querySelector("#item-pages");
 const currentPageContainer = document.querySelector("#current-page");
 
@@ -25,12 +25,11 @@ let currentPage = 1;
 var queryStringObject = {
     hasimage: 1,
     //medium: "Terracotta",
-    classification: "Audiovisual Works",
+    classification: "Albums",
     page: 1,
-    size: 10,
+    size: 12,
     //&q=title:20,
 };
-
 
 
 var queryString = JSON.stringify(queryStringObject);
@@ -119,7 +118,7 @@ let fetchPosts = async (type, queryString, currentPage) => {
          console.log(posts.length);
         console.log(data); 
         
-        numberOfItemsContainer.innerHTML = `items: ${data.info.totalrecords}`;
+        totalResultsContainer.innerHTML = `items: ${data.info.totalrecords}`;
         
         currentPageContainer.innerHTML = `${currentPage} / `;
         
@@ -127,12 +126,13 @@ let fetchPosts = async (type, queryString, currentPage) => {
             numberOfPages.innerHTML = `${data.info.pages}`;
         }
         
-
         posts.forEach(element => {
 
-            html += `<div class="col-md-3 mb-4">`;
+            html += `<div class="item col-md-3 mb-4 d-flex align-self-top flex-wrap">`;
+            html += `<div class="image">`;
             html += `<img src="${element.primaryimageurl}" />`;
-            html += `<div clas="title">${element.title}</div>`;
+            html += `</div>`;
+            html += `<div class="title my-4">${element.title}</div>`;
             html += `</div>`;
 
            /*  var iDiv = document.createElement('div');
@@ -171,7 +171,7 @@ loadmoreButton.addEventListener("click", (e) => {
 
     if(currentPage < numberOfPages.innerHTML){
 
-        queryStringObject["size"] = queryStringObject["size"] + 10;
+        queryStringObject["size"] = queryStringObject["size"] + 12;
 
         var queryString = JSON.stringify(queryStringObject);
         queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);

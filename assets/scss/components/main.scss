@@ -26,3 +26,30 @@ img{
 p{
     margin-bottom: 1rem;
 }
+
+select{
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+
+#posts{
+    > .container {
+        .item{
+            .image{
+                height: 300px;
+                position: relative;
+                width: 100%;
+                img{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    object-fit: cover;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

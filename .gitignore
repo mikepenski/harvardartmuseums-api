@@ -1,0 +1,8 @@
+/node_modules
+
+bin/
+.sass-cache/
+.idea/
+.DS_Store
+._*
+.AppleDouble/

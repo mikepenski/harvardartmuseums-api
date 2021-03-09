@@ -34,9 +34,21 @@ resizeContent();
 
 window.onresize = resizeContent;
 
+// header logo with width on scroll
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    document.querySelector("header .logo img").style.width = "100px";
+  } else {
+    document.querySelector("header .logo img").style.width = "125px";
+  }
+}
+
 
 let type;
 let currentPage = 1;
+let pagesize = 16
 
 //get - set query filter helper function
 var queryStringObject = {
@@ -44,7 +56,7 @@ var queryStringObject = {
     //medium: "Terracotta",
     classification: "Albums",
     page: 1,
-    size: 12,
+    size: pagesize,
     //&q=title:20,
     //q: "horseman",
 };
@@ -60,9 +72,12 @@ console.log(queryString)
 classificationFilter.addEventListener("change", () => {
 
     type = "classification";
-    queryStringObject["medium"] = "any";
 
+    queryStringObject["medium"] = "any";
     queryStringObject["classification"] = classificationFilter.value;
+    queryStringObject["size"] = pagesize;
+    queryStringObject["page"] = 1;
+    delete queryStringObject.q;
 
     var queryString = JSON.stringify(queryStringObject);
     queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -79,6 +94,9 @@ mediumFilter.addEventListener("change", () => {
 
     queryStringObject["medium"] = mediumFilter.value;
     queryStringObject["classification"] = "any";
+    queryStringObject["size"] = pagesize;
+    queryStringObject["page"] = 1;
+    delete queryStringObject.q;
 
     var queryString = JSON.stringify(queryStringObject);
     queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -168,11 +186,23 @@ let fetchPosts = async (type, queryString, currentPage) => {
         
         posts.forEach(element => {
 
-            html += `<div class="item col-md-3 mb-4 d-flex align-self-top flex-wrap">`;
+            html += `<div class="item col-md-3 mb-5 d-flex align-self-top flex-wrap">`;
             html += `<div class="image">`;
-            html += `<img src="${element.primaryimageurl}" />`;
+            html += `<a href="${element.url}" target="_blank" rel="nofollow" class="full-link">`;
+            if(element.primaryimageurl){
+                html += `<img src="${element.primaryimageurl}" />`;
+            } else {
+                html += `<img src="https://via.placeholder.com/400x600?text=Placeholder" />`;
+            }
+            if(element.copyright){
+                html += `<div class="date mb-4"><small>${element.copyright}</small></div>`;
+               }
+            html += `</a>`;
             html += `</div>`;
             html += `<div class="title my-4">${element.title}</div>`;
+            html += `<div class="text-center py-2 align-items-end d-flex flex-wrap justify-content-start w-100">`;
+            html += `<a href="${element.url}" target="_blank" rel="nofollow" class="btn btn-dark">read more</a>`;
+            html += `</div>`;
             html += `</div>`;
 
            /*  var iDiv = document.createElement('div');
@@ -181,7 +211,6 @@ let fetchPosts = async (type, queryString, currentPage) => {
             postContainer.appendChild(iDiv); */
             
         });
-
 
     postContainer.innerHTML = html;
 
@@ -211,7 +240,7 @@ loadmoreButton.addEventListener("click", (e) => {
 
     if(currentPage < numberOfPages.innerHTML){
 
-        queryStringObject["size"] = queryStringObject["size"] + 12;
+        queryStringObject["size"] = queryStringObject["size"] + pagesize;
 
         var queryString = JSON.stringify(queryStringObject);
         queryString = "&" + queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -235,6 +264,7 @@ siteSearch.addEventListener("submit", (e) => {
     type = "search";
 
     delete queryStringObject.classification;
+    delete queryStringObject.medium;
 
     queryStringObject["q"] = document.querySelector("#seachInput").value;
 

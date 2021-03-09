@@ -13,3 +13,7 @@ __Schritt 2:__
 
 __Schritt 3:__ 
 - Die Suchfunktion UND die Filter Möglichkeiten funktionieren. 
+
+## netlify deployment
+
+- https://youthful-swanson-b1b79f.netlify.app/

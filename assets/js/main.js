@@ -2,26 +2,32 @@
 
 // https://api.harvardartmuseums.org/object?apikey=48f5fbf5-4e39-4108-a9ee-fb768134935b&classification=Paintings|Prints
 
-//vars
+/*
+* define vars for api, container, filter etc.
+*/
+
+//api stuff
 const API_KEY = "?apikey=48f5fbf5-4e39-4108-a9ee-fb768134935b";
 const API_URL_POSTS = 'https://api.harvardartmuseums.org/object';
-//let PARAMS = "&hasimage=1";
+//general container
 const body = document.querySelector("body");
 const postContainer = document.querySelector("#posts .container .row");
-
-//filter
-const classificationFilter = document.querySelector("#classification-filter");
-const mediumFilter = document.querySelector("#medium-filter");
-
-const loadmoreButton = document.querySelector("#loadmore");
 const totalResultsContainer = document.querySelector("#totalResults .items");
 const numberOfPages = document.querySelector("#item-pages");
 const currentPageContainer = document.querySelector("#current-page");
-
 const siteSearch = document.querySelector("#site-search");
+//filter
+const classificationFilter = document.querySelector("#classification-filter");
+const mediumFilter = document.querySelector("#medium-filter");
+//loar more button
+const loadmoreButton = document.querySelector("#loadmore");
+//base settings for query string
+let type;
+let currentPage = 1;
+let pagesize = 16
 
 /*
-* adding padding to body (header height)
+* function add padding to body (header height)
 */
 function resizeContent(){
     const header = document.querySelector("header")
@@ -34,7 +40,9 @@ resizeContent();
 
 window.onresize = resizeContent;
 
-// header logo with width on scroll
+/*
+* change header logo with width on scroll
+*/
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -46,14 +54,12 @@ function scrollFunction() {
 }
 
 
-let type;
-let currentPage = 1;
-let pagesize = 16
+/*
+* get - set query filter helper function
+*/
 
-//get - set query filter helper function
 var queryStringObject = {
     hasimage: 1,
-    //medium: "Terracotta",
     classification: "Albums",
     page: 1,
     size: pagesize,
@@ -157,14 +163,16 @@ let fetchPosts = async (type, queryString, currentPage) => {
             } else {
                 html += `<img src="https://via.placeholder.com/400x600?text=Placeholder" />`;
             }
-            if(element.copyright){
-                html += `<div class="date mb-4"><small>${element.copyright}</small></div>`;
-               }
             html += `</a>`;
+            /*
+              if(element.copyright){
+                html += `<div class="copyright mb-4 position-absolute" style="bottom:1rem;"><small>${element.copyright}</small></div>`;
+               }
+            */
             html += `</div>`;
             html += `<div class="title my-4">${element.title}</div>`;
             html += `<div class="text-center py-2 align-items-end d-flex flex-wrap justify-content-start w-100">`;
-            html += `<a href="${element.url}" target="_blank" rel="nofollow" class="btn btn-dark">read more</a>`;
+            html += `<a href="${element.url}" target="_blank" rel="nofollow" class="btn btn-outline-dark">read more</a>`;
             html += `</div>`;
             html += `</div>`;
 
@@ -204,7 +212,7 @@ classificationFilter.addEventListener("change", () => {
     mediumFilter.selectedIndex = 0;
 
     document.querySelector("#seachInput").value = "";
-    
+
     var queryString = JSON.stringify(queryStringObject);
     queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
 

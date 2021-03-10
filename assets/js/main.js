@@ -66,47 +66,6 @@ var queryString = JSON.stringify(queryStringObject);
 queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
 console.log(queryString)
 
-/*
-* eventListener for classification
-*/
-classificationFilter.addEventListener("change", () => {
-
-    type = "classification";
-
-    queryStringObject["medium"] = "any";
-    queryStringObject["classification"] = classificationFilter.value;
-    queryStringObject["size"] = pagesize;
-    queryStringObject["page"] = 1;
-    delete queryStringObject.q;
-
-    mediumFilter.selectedIndex = 0;
-
-    var queryString = JSON.stringify(queryStringObject);
-    queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
-
-    fetchPosts(type, queryString, currentPage);
-});
-
-/*
-* eventListener for medium
-*/
-mediumFilter.addEventListener("change", () => {
-
-    type = "medium";
-
-    queryStringObject["medium"] = mediumFilter.value;
-    queryStringObject["classification"] = "any";
-    queryStringObject["size"] = pagesize;
-    queryStringObject["page"] = 1;
-    delete queryStringObject.q;
-
-    classificationFilter.selectedIndex = 0;
-
-    var queryString = JSON.stringify(queryStringObject);
-    queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
-
-    fetchPosts(type, queryString, currentPage);
-});
 
 
 /*
@@ -229,6 +188,76 @@ let fetchPosts = async (type, queryString, currentPage) => {
 fetchPosts(type, queryString, currentPage);
 
 
+/*
+* eventListener for classification
+*/
+classificationFilter.addEventListener("change", () => {
+
+    type = "classification";
+
+    queryStringObject["medium"] = "any";
+    queryStringObject["classification"] = classificationFilter.value;
+    queryStringObject["size"] = pagesize;
+    queryStringObject["page"] = 1;
+    delete queryStringObject.q;
+
+    mediumFilter.selectedIndex = 0;
+
+    document.querySelector("#seachInput").value = "";
+    
+    var queryString = JSON.stringify(queryStringObject);
+    queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
+
+    fetchPosts(type, queryString, currentPage);
+});
+
+/*
+* eventListener for medium
+*/
+mediumFilter.addEventListener("change", () => {
+
+    type = "medium";
+
+    queryStringObject["medium"] = mediumFilter.value;
+    queryStringObject["classification"] = "any";
+    queryStringObject["size"] = pagesize;
+    queryStringObject["page"] = 1;
+    delete queryStringObject.q;
+
+    classificationFilter.selectedIndex = 0;
+
+    document.querySelector("#seachInput").value = "";
+
+    var queryString = JSON.stringify(queryStringObject);
+    queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
+
+    fetchPosts(type, queryString, currentPage);
+});
+
+
+/*
+* eventListener for siteSearch
+*/
+siteSearch.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    type = "search";
+
+    delete queryStringObject.classification;
+    delete queryStringObject.medium;
+
+    mediumFilter.selectedIndex = 0;
+    classificationFilter.selectedIndex = 0;
+
+    queryStringObject["q"] = document.querySelector("#seachInput").value;
+
+    var queryString = JSON.stringify(queryStringObject);
+    queryString = "&" + queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
+
+    fetchPosts(type, queryString, currentPage);
+});
+
 
 /*
 * eventListener for loadmoreButton
@@ -255,25 +284,4 @@ loadmoreButton.addEventListener("click", (e) => {
 
     } 
   
-});
-
-
-/*
-* eventListener for siteSearch
-*/
-siteSearch.addEventListener("submit", (e) => {
-
-    e.preventDefault();
-
-    type = "search";
-
-    delete queryStringObject.classification;
-    delete queryStringObject.medium;
-
-    queryStringObject["q"] = document.querySelector("#seachInput").value;
-
-    var queryString = JSON.stringify(queryStringObject);
-    queryString = "&" + queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
-
-    fetchPosts(type, queryString, currentPage);
 });

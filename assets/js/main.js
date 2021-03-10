@@ -14,7 +14,7 @@ const classificationFilter = document.querySelector("#classification-filter");
 const mediumFilter = document.querySelector("#medium-filter");
 
 const loadmoreButton = document.querySelector("#loadmore");
-const totalResultsContainer = document.querySelector("#totalResults");
+const totalResultsContainer = document.querySelector("#totalResults .items");
 const numberOfPages = document.querySelector("#item-pages");
 const currentPageContainer = document.querySelector("#current-page");
 
@@ -41,7 +41,7 @@ function scrollFunction() {
   if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
     document.querySelector("header .logo img").style.width = "100px";
   } else {
-    document.querySelector("header .logo img").style.width = "125px";
+    document.querySelector("header .logo img").style.width = "140px";
   }
 }
 
@@ -57,10 +57,10 @@ var queryStringObject = {
     classification: "Albums",
     page: 1,
     size: pagesize,
-    //&q=title:20,
+    //q: "title=printed",
     //q: "horseman",
-};
-
+    q: "Written"
+}
 
 var queryString = JSON.stringify(queryStringObject);
 queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -78,6 +78,8 @@ classificationFilter.addEventListener("change", () => {
     queryStringObject["size"] = pagesize;
     queryStringObject["page"] = 1;
     delete queryStringObject.q;
+
+    mediumFilter.selectedIndex = 0;
 
     var queryString = JSON.stringify(queryStringObject);
     queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -97,6 +99,8 @@ mediumFilter.addEventListener("change", () => {
     queryStringObject["size"] = pagesize;
     queryStringObject["page"] = 1;
     delete queryStringObject.q;
+
+    classificationFilter.selectedIndex = 0;
 
     var queryString = JSON.stringify(queryStringObject);
     queryString = "&" +queryString.replaceAll(':', '=').replaceAll(',', '&').replaceAll('"', '').slice(1, -1);
@@ -176,7 +180,7 @@ let fetchPosts = async (type, queryString, currentPage) => {
          console.log(posts.length);
         console.log(data); 
         
-        totalResultsContainer.innerHTML = `items: ${data.info.totalrecords}`;
+        totalResultsContainer.innerHTML = `${data.info.totalrecords}`;
         
         currentPageContainer.innerHTML = `${currentPage} / `;
         
